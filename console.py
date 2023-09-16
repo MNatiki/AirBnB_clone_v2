@@ -125,10 +125,10 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[args[0]]()
         for i in args[1:]:
             i = i.split(":")
-            setattr(new_instance, i[0], i[1].replace("\"", ""))
-        storage.save()
+            if hasattr(new_instance, i[0]):
+               setattr(new_instance, i[0], i[1].replace("\"", ""))                
+        new_instance.save()
         print(new_instance.id)
-        storage.save()
 
     def help_create(self):
         """ Help information for the create method """
@@ -217,7 +217,7 @@ class HBNBCommand(cmd.Cmd):
             for k, v in storage._FileStorage__objects.items():
                 print_list.append(str(v))
 
-        print(print_list)
+        print(f"[{', '.join(print_list)}]")
 
     def help_all(self):
         """ Help information for the all command """
