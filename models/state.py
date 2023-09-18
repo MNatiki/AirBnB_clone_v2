@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-""" State Module for HBNB project """
+"""
+State Module for HBNB project
+The State class represents a state
+and has a relationship with cities.
+"""
 from models.base_model import BaseModel, Base, ForeignKey
 from models.base_model import Column, String, Integer, DateTime
 from sqlalchemy.orm import relationship
@@ -7,7 +11,12 @@ import os
 
 
 class State(BaseModel, Base):
-    """ State class """
+    """
+     State class
+     The State class represents a state and has a
+     relationship with cities, either through a database or
+     through a property method.
+    """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
     if os.getenv("HBNB_TYPE_STORAGE") == 'db':

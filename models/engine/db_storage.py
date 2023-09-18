@@ -1,5 +1,9 @@
 #!/usr/bin/python3
-"""This module defines a class to manage database storage for hbnb clone"""
+"""
+This module defines a class to manage database storage for hbnb clone
+The `DBStorage` class manages storage of hbnb models
+in a MySQL database.
+"""
 from ..base_model import Base
 from sqlalchemy import create_engine, MetaData
 from sqlalchemy.orm import sessionmaker, scoped_session
@@ -9,7 +13,11 @@ from .classes import classes
 
 
 class DBStorage:
-    """This class manages storage of hbnb models in a MySQL database."""
+    """
+    This class manages storage of hbnb models in a MySQL database.
+    The `DBStorage` class manages storage of hbnb models in a MySQL
+    database.
+    """
     __engine = None
     __session = None
 
