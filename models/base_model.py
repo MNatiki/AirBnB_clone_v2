@@ -13,6 +13,7 @@ class BaseModel:
     id = Column(String(60), primary_key=True)
     created_at = Column(DateTime, nullable=False, default=datetime.utcnow())
     updates_at = Column(DateTime, nullable=False, default=datetime.utcnow())
+
     def __init__(self, *args, **kwargs):
         """Instatntiates a new model"""
         if not kwargs:
@@ -26,14 +27,14 @@ class BaseModel:
             if 'created_at' not in kwargs.keys():
                 kwargs['created_at'] = datetime.now()
             else:
-                kwargs['created_at'] = datetime.strptime(kwargs['created_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
+                kwargs['created_at'] = datetime.\
+                      strptime(kwargs['created_at'], '%Y-%m-%dT%H:%M:%S.%f')
             if 'updated_at' not in kwargs.keys():
                 kwargs['updated_at'] = datetime.now()
             else:
-                kwargs['updated_at'] = datetime.strptime(kwargs['updated_at'],
-                                                     '%Y-%m-%dT%H:%M:%S.%f')
-            
+                kwargs['updated_at'] = datetime.\
+                      strptime(kwargs['updated_at'], '%Y-%m-%dT%H:%M:%S.%f')
+
             if '__class__' in kwargs.keys():
                 del kwargs['__class__']
 
@@ -48,7 +49,7 @@ class BaseModel:
         """Updates updated_at with current time when instance is changed"""
         from models import storage
         self.updated_at = datetime.now()
-        print("base model save")
+        # print("base model save")
         storage.new(self)
         storage.save()
 

@@ -6,13 +6,15 @@ from os import getenv
 import MySQLdb
 from .classes import classes
 
+
 class DBStorage:
     __engine = None
     __session = None
+
     def __init__(self):
         connect = MySQLdb.connect(host="localhost", port=3306,
-                                user="hbnb_dev", passwd="hbnb_dev_pwd",
-                                charset="utf8")
+                                  user="hbnb_dev", passwd="hbnb_dev_pwd",
+                                  charset="utf8")
         cursor = connect.cursor()
         cursor.execute("CREATE DATABASE IF NOT EXISTS hbnb_dev_db")
         connect.commit()
@@ -47,13 +49,13 @@ class DBStorage:
         return my_dict
 
     def new(self, obj):
-        print("passed new")
+        # print("passed new")
         # print(obj)
         self.__session.add(obj)
         print(self.__session.new)
 
     def save(self):
-        print("in db save")
+        # print("in db save")
         self.__session.commit()
 
     def delete(self, obj=None):
@@ -70,4 +72,4 @@ class DBStorage:
         from ..user import User
         Base.metadata.create_all(self.__engine)
         self.__session = scoped_session(sessionmaker(bind=self.__engine,
-                                       expire_on_commit=False))()
+                                        expire_on_commit=False))()
