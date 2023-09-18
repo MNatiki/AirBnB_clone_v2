@@ -125,9 +125,10 @@ class HBNBCommand(cmd.Cmd):
         new_instance = HBNBCommand.classes[args[0]]()
         for i in args[1:]:
             i = i.split(":")
-            if hasattr(new_instance, i[0]):
-               setattr(new_instance, i[0], i[1].replace("\"", ""))                
+            # if hasattr(new_instance, i[0]):
+            setattr(new_instance, i[0], i[1].replace("\"", ""))                
         new_instance.save()
+        # storage.save()
         print(new_instance.id)
 
     def help_create(self):
@@ -210,11 +211,11 @@ class HBNBCommand(cmd.Cmd):
             if args not in HBNBCommand.classes:
                 print("** class doesn't exist **")
                 return
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 if k.split('.')[0] == args:
                     print_list.append(str(v))
         else:
-            for k, v in storage._FileStorage__objects.items():
+            for k, v in storage.all().items():
                 print_list.append(str(v))
 
         print(f"[{', '.join(print_list)}]")
@@ -227,7 +228,7 @@ class HBNBCommand(cmd.Cmd):
     def do_count(self, args):
         """Count current number of class instances"""
         count = 0
-        for k, v in storage._FileStorage__objects.items():
+        for k, v in storage.all():
             if args == k.split('.')[0]:
                 count += 1
         print(count)
