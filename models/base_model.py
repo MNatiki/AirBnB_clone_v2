@@ -55,12 +55,12 @@ class BaseModel:
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
         my_dic = {}
-        for k, v in self.to_dict(iso=False).items():
-            if k != '__class__':
-                my_dic[k] = v
+        # for k, v in self.to_dict(iso=False).items():
+        #     if k != '__class__':
+        #         my_dic[k] = v
         return '[{}] ({}) {}'.format(
             cls, self.id,
-            my_dic)
+            self.to_dict(iso=False))
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
