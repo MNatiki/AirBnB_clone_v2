@@ -46,7 +46,7 @@ class BaseModel:
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
         return '[{}] ({}) {}'.format(
             cls, self.id,
-            (self.to_dict() if getenv('HBNB_TYPE_STORAGE') == 'file'
+            (self.to_dict(iso=False) if getenv('HBNB_TYPE_STORAGE') == 'file'
                else self.to_dict(iso=False)))
 
     def save(self):
