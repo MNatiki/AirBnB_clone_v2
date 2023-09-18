@@ -9,7 +9,7 @@ from models.review import Review
 
 
 classes = {
-    # 'User': User,
+    'User': User,
     'State': State,
     'City': City,
     # 'Place': Place,

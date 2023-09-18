@@ -54,10 +54,13 @@ class BaseModel:
     def __str__(self):
         """Returns a string representation of the instance"""
         cls = (str(type(self)).split('.')[-1]).split('\'')[0]
+        my_dic = {}
+        for k, v in self.to_dict(iso=False).items():
+            if k != '__class__':
+                my_dic[k] = v
         return '[{}] ({}) {}'.format(
             cls, self.id,
-            (self.to_dict(iso=False) if getenv('HBNB_TYPE_STORAGE') == 'file'
-               else self.to_dict(iso=False)))
+            my_dic)
 
     def save(self):
         """Updates updated_at with current time when instance is changed"""
