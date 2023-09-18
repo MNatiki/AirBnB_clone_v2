@@ -72,5 +72,9 @@ class BaseModel:
         return dictionary
 
     def delete(self):
+        """
+        The delete function deletes an object from
+        storage and removes it from memory.
+        """
         storage.delete(self)
         del self
