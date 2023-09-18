@@ -50,14 +50,14 @@ class DBStorage:
             my_query = self.__session.query(eval(cls)).all()
             for i in my_query:
                 my_dict[str(my_query.__name__) + "." + i.id] = i
-            print(my_query)
+            # print(my_query)
             return my_dict
         for key, value in classes.items():
             # print(f"{key} {value.id}")
             my_query = self.__session.query(value).all()
             for i in my_query:
                 my_dict[str(key) + "." + i.id] = i
-        print(my_query)
+        # print(my_query)
         return my_dict
 
     def new(self, obj):
