@@ -126,7 +126,7 @@ class HBNBCommand(cmd.Cmd):
         for i in args[1:]:
             i = i.split(":")
             # if hasattr(new_instance, i[0]):
-            setattr(new_instance, i[0], i[1].replace("\"", ""))                
+            setattr(new_instance, i[0], i[1].replace("\"", ""))
         new_instance.save()
         # storage.save()
         print(new_instance.id)
