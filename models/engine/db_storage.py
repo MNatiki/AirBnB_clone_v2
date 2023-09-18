@@ -56,7 +56,8 @@ class DBStorage:
 
     def save(self):
         # print("in db save")
-        self.__session.commit()
+        # self.__session.commit()
+        pass
 
     def delete(self, obj=None):
         if obj is None:
