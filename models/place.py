@@ -13,12 +13,12 @@ from models.amenity import Amenity
 
 
 place_amenity = Table('place_amenity', Base.metadata,
-                        Column('place_id', String(60),
-                               ForeignKey('places.id'),
-                               primary_key=True, nullable=False),
-                        Column('amenity_id', String(60),
-                               ForeignKey('amenities.id'),
-                               primary_key=True, nullable=False))
+                      Column('place_id', String(60),
+                             ForeignKey('places.id'),
+                             primary_key=True, nullable=False),
+                      Column('amenity_id', String(60),
+                             ForeignKey('amenities.id'),
+                             primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -46,7 +46,7 @@ class Place(BaseModel, Base):
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship('Review',
                                backref='place', cascade="all, delete")
-        amenities = relationship('Amenity', backref='place_amenities',
+        amenities = relationship('Amenity',
                                  secondary="place_amenity",
                                  viewonly=False)
     else:
@@ -81,5 +81,5 @@ class Place(BaseModel, Base):
             to a list if the input value is of type
             Amenity.
             """
-            if type(value) == Amenity:
+            if type(value) is Amenity:
                 self.amenity_ids.append(value)
