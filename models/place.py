@@ -70,16 +70,17 @@ class Place(BaseModel, Base):
             """
             my_list = []
             for i, j in storage.all(Amenity).items():
-                if i.split(".") in self.amenity_ids:
+                if i in self.amenity_ids:
                     my_list.append(j)
             return my_list
 
         @amenities.setter
-        def amenities(self, value):
+        def amenities(self, value=None):
             """
             The function "amenities" appends an Amenity object
             to a list if the input value is of type
             Amenity.
             """
-            if type(value) is Amenity:
-                self.amenity_ids.append(value)
+            if type(value).__name__ is Amenity:
+                new = "Amenity" + "." + value.id
+                self.amenity_ids.append(new)
