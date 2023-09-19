@@ -70,7 +70,7 @@ class Place(BaseModel, Base):
             """
             my_list = []
             for i, j in storage.all(Amenity).items():
-                if i in self.amenity_ids:
+                if i in self.amenity_ids.keys():
                     my_list.append(j)
             return my_list
 
