@@ -81,5 +81,5 @@ class Place(BaseModel, Base):
             to a list if the input value is of type
             Amenity.
             """
-            if type(value) is Amenity:
+            if type(value) == Amenity:
                 self.amenity_ids.append(value)
