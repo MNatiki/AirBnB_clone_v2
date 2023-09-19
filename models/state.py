@@ -8,6 +8,7 @@ from models.base_model import BaseModel, Base, ForeignKey
 from models.base_model import Column, String, Integer, DateTime
 from sqlalchemy.orm import relationship
 import os
+from models.city import City
 
 
 class State(BaseModel, Base):
@@ -24,8 +25,13 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
+            """
+            The function "cities" returns a list of cities associated
+            with a specific state.
+            """
             from models import storage
-            all_obj = storage.all()
-            return [i for i in all_obj.keys()
-                    if all_obj[i].__class__ == 'City'
-                    and all_obj[i].state_id == self.state_id]
+            city_list = []
+            for city in list(storage.all(City).values()):
+                if city.state_id == self.id:
+                    city_list.append(city)
+            return city_list
