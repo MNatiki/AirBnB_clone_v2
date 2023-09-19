@@ -69,9 +69,9 @@ class Place(BaseModel, Base):
             based on their IDs.
             """
             my_list = []
-            for i in storage.all(Amenity).values():
-                if i.id in self.amenity_ids:
-                    my_list.append(i)
+            for i, j in storage.all(Amenity).items():
+                if i in self.amenity_ids:
+                    my_list.append(j)
             return my_list
 
         @amenities.setter
