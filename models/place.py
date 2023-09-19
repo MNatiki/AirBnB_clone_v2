@@ -5,10 +5,20 @@ The `Place` class represents a place to stay
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float
 from sqlalchemy.orm import relationship
-from sqlalchemy import ForeignKey
+from sqlalchemy import ForeignKey, Table
 from os import getenv
 from models import storage
 from models.review import Review
+from models.amenity import Amenity
+
+
+associate_table = Table('place_amenity', Base.metadata,
+                        Column('place_id', String(60),
+                               ForeignKey('places.id'),
+                               primary_key=True, nullable=False),
+                        Column('amenity_id', String(60),
+                               ForeignKey('amenities.id'),
+                               primary_key=True, nullable=False))
 
 
 class Place(BaseModel, Base):
@@ -32,9 +42,13 @@ class Place(BaseModel, Base):
     price_by_night = Column(Integer, nullable=False, default=0)
     latitude = Column(Float)
     longitude = Column(Float)
+    amenity_ids = []
     if getenv('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship('Review',
                                backref='place', cascade="all, delete")
+        amenities = relationship('Amenity', backref='place_amenities',
+                                 secondary="place_amenity",
+                                 viewonly=False)
     else:
         @property
         def reviews(self):
@@ -47,3 +61,25 @@ class Place(BaseModel, Base):
                 if i.place_id == self.id:
                     my_list.append(i)
             return my_list
+
+        @property
+        def amenities(self):
+            """
+            The function "amenities" returns a list of amenities
+            based on their IDs.
+            """
+            my_list = []
+            for i in storage.all(Amenity).values():
+                if i.id in self.amenity_ids:
+                    my_list.append(i)
+            return my_list
+
+        @amenities.setter
+        def amenities(self, value):
+            """
+            The function "amenities" appends an Amenity object
+            to a list if the input value is of type
+            Amenity.
+            """
+            if type(value) is Amenity:
+                self.amenity_ids.append(value)
