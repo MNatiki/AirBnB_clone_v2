@@ -16,6 +16,7 @@ class User(BaseModel, Base):
     The User class defines a user with attributes
     such as email, password, first name, and last name.
     """
+
     __tablename__ = "users"
     email = Column(String(128), nullable=False)
     password = Column(String(128), nullable=False)

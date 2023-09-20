@@ -1,6 +1,7 @@
 #!/usr/bin/python3
 """
 The `Place` class represents a place to stay
+in the AirBnB project 
 """
 from models.base_model import BaseModel, Base
 from sqlalchemy import Column, String, Integer, Float
@@ -12,6 +13,10 @@ from models.review import Review
 from models.amenity import Amenity
 
 
+"""
+The `place_amenity` variable is creating a table called
+`place_amenity` in the database. This table
+"""
 place_amenity = Table('place_amenity', Base.metadata,
                       Column('place_id', String(60),
                              ForeignKey('places.id'),
@@ -29,6 +34,7 @@ class Place(BaseModel, Base):
     maximum number of guests, price per night, latitude,
     longitude, and a list of amenity IDs.
     """
+
     __tablename__ = "places"
     city_id = Column(String(60),
                      ForeignKey('cities.id'), nullable=False)
