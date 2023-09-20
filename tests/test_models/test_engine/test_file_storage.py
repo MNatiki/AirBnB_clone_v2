@@ -8,7 +8,7 @@ from unittest import TestCase
 
 
 @unittest.skipIf(os.getenv('HBNB_TYPE_STORAGE') == 'db',
-                 'if using database skip this')
+                 'Test FileStorage')
 class test_fileStorage(TestCase):
     """ Class to test the file storage method """
 
