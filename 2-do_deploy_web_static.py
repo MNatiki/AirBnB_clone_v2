@@ -1,49 +1,68 @@
 #!/usr/bin/python3
-"""
-The `do_pack()` function creates a compressed archive file of the
-`web_static` folder and saves it in the `versions` directory
-"""
+'''Module 2-do_deploy_web_static
+Distributes an archive to your web servers, using do_deploy()
+'''
 from fabric.api import *
-from datetime import datetime
 import os
-env.hosts = ['54.90.60.221:80', '52.201.220.122:80']
+from fabric.api import settings
+
+env.hosts = ['54.90.60.221', '52.201.220.122']
 
 
-# def do_pack():
-#     """
-#     The function `do_pack()` creates a compressed archive file of the
-#     `web_static` folder and saves it in the `versions` directory, and
-#     then prints the path and size of the created archive file.
-#     """
-#     today = datetime.now()
-#     name = "web_static_" + str(today.year) + str(today.month) + \
-#         str(today.day) + str(today.hour) + str(today.minute) + \
-#         str(today.second) + ".tgz"
-#     local("mkdir -p versions")
-#     local(f'tar -cvzf versions/{name}.tgz web_static')
-#     # print(name)
-#     try:
-#         print("web_static packed: versions/{} -> \
-#               {os.get.path.getsize(os.getcwd() + '/versions/'
-#    + name)}Bytes".format(name))
-#     except Exception:
-#         return None
-#     return '/versions/' + name
+class FabricException(Exception):
+    '''Fake wrapper class to handle Fabric run() aborts as Python exceptions'''
+    pass
 
 
 def do_deploy(archive_path):
-    if os.path.exists(archive_path) is False:
-        print("not a path")
+    '''Calls do_deploy_run and returns either True or
+    False if an exception is raised'''
+    with settings(abort_exception=FabricException):
+        try:
+            returned = do_deploy_run(archive_path)
+        except Exception or FabricException:
+            # print("Exception caught, returned false")
+            return False
+    if returned is False:
+        # print("Function returned false")
         return False
-    put(archive_path, '/tmp/')
-    myfile = archive_path.split('/')[-1]
-    myfile1 = myfile.split('.')[0]
-    path = "/data/web_static/releases/"
-    run("mkdir -p {}{}}/".format(path, myfile1))
-    run("tar -xzf /tmp/{} -C {}{}/".format(myfile, path, myfile1))
-    run("rm /tmp/{}".format(myfile))
-    run("{}{}/web_static/* {}/".format(path, myfile1, myfile1))
-    run("rm -rf {}/{}/web_static".format(path, myfile1))
-    run("rm -rf /data/web_static/current")
-    run("ln -s {}{}/ /data/web_static/current".format(path, myfile1))
+    # print("Function returned True")
+    return True
 
+
+def do_deploy_run(archive_path):
+    '''Deploys archive to remote servers'''
+    # Archive's name without the .tgz extension
+    archive_name = archive_path[9:-4]
+
+    # print("Archive path:", os.getcwd() + '/' + archive_path)
+    # Return false if the archive doesn't exist
+    if not os.path.isfile(os.getcwd() + '/' + archive_path):
+        return False
+
+    # Upload the archive to remote servers
+    put(archive_path, "/tmp/")
+    # If a folder with the same archive name exists, remvoe it
+    run('sudo rm -rf -- /data/web_static/releases/' + archive_name)
+
+    run('sudo mkdir -p /data/web_static/releases/' + archive_name)
+
+    # Extract the archive's contents to
+    # /data/web_static/releases/<archive_name>
+    run('sudo tar -xzf /tmp/' + archive_path[9:] +
+        ' -C /data/web_static/releases/' + archive_name)
+    # Move the contents of the extracted archive to its parent folder
+    run('sudo mv -f /data/web_static/releases/'
+        + archive_name + '/web_static/* '
+        + '/data/web_static/releases/' + archive_name)
+    run('sudo rm -rf /data/web_static/releases/'
+        + archive_name + '/web_static/')
+    run('sudo rm /tmp/' + archive_path[9:])
+
+    # '''
+    # Remove the symbolic link if it exists
+    run('sudo rm -f -- /data/web_static/current')
+    run('sudo ln -sf /data/web_static/releases/'
+        + archive_path[9:-4] + ' /data/web_static/current')
+    return True
+    # '''
