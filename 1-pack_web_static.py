@@ -3,7 +3,7 @@
 The `do_pack()` function creates a compressed archive file of the
 `web_static` folder and saves it in the `versions` directory
 """
-from fabric.api import local
+from fabric.api import *
 from datetime import datetime
 import os
 
@@ -19,11 +19,13 @@ def do_pack():
         str(today.day) + str(today.hour) + str(today.minute) + \
         str(today.second) + ".tgz"
     local("mkdir -p versions")
-    local(f'tar -cvzf versions/{name} web_static')
+    local('tar -cvzf versions/{} web_static'.format(name))
     # print(name)
     try:
-        print(f"web_static packed: versions/{name} -> \
-              {os.get.path.getsize(os.getcwd() + '/versions/' + name)}Bytes")
+        print("web_static packed: versions/{}\
+               -> {}Bytes".format(name,
+                                  os.get.path.getsize(os.getcwd() +
+                                                      '/versions/' + name)))
     except Exception:
-        return None
-    return '/versions/' + name
+        pass
+    return 'versions/' + name
