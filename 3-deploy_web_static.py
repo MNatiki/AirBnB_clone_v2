@@ -7,7 +7,6 @@ from fabric.api import *
 do_pack = __import__('1-pack_web_static').do_pack
 do_deploy = __import__('2-do_deploy_web_static').do_deploy
 env.hosts = ['52.201.220.122', '54.90.60.221']
-my_path = do_pack()
 
 
 def deploy():
@@ -16,6 +15,7 @@ def deploy():
     if it returns a valid path, it calls the "do_deploy"
     function with that path and returns the result.
     """
+    my_path = do_pack()
     # print(os.path.exists(my_path))
     if my_path:
         my_dep = do_deploy(my_path)
