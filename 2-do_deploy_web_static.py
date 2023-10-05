@@ -51,14 +51,12 @@ def do_deploy_run(archive_path):
     # /data/web_static/releases/<archive_name>
     run('tar -xzf /tmp/' + archive_path[9:] +
         ' -C /data/web_static/releases/' + archive_name)
-    # Move the contents of the extracted archive to its parent folder
     run('rm /tmp/' + archive_path[9:])
     run('mv /data/web_static/releases/'
         + archive_name + '/web_static/* '
          '/data/web_static/releases/' + archive_name)
     run('rm -rf /data/web_static/releases/'
         + archive_name + '/web_static/')
-
     run('rm -rf /data/web_static/current')
     run('ln -sf /data/web_static/releases/'
         + archive_path[9:-4] + ' /data/web_static/current')
