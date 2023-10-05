@@ -6,7 +6,7 @@ The `do_pack()` function creates a compressed archive file of the
 from fabric.api import *
 from datetime import datetime
 import os
-env.hosts = ['54.90.60.221', '52.201.220.122']
+env.hosts = ['54.90.60.221:80', '52.201.220.122:80']
 
 
 # def do_pack():
@@ -33,18 +33,17 @@ env.hosts = ['54.90.60.221', '52.201.220.122']
 
 def do_deploy(archive_path):
     if os.path.exists(archive_path) is False:
+        print("not a path")
         return False
-    try:
-        put(archive_path, '/tmp/')
-        myfile = archive_path.split('/')[-1]
-        myfile1 = myfile.split('.')[0]
-        path = "/data/web_static/releases/"
-        run("mkdir -p {}{}}/".format(path, myfile1))
-        run("tar -xzf /tmp/{} -C {}{}/".format(myfile, path, myfile1))
-        run("rm /tmp/{}".format(myfile))
-        run("{}{}/web_static/* {}/".format(path, myfile1, myfile1))
-        run("rm -rf {}/{}/web_static".format(path, myfile1))
-        run("rm -rf /data/web_static/current")
-        run("ln -s {}{}/ /data/web_static/current".format(path, myfile1))
-    except Exception:
-        return False
+    put(archive_path, '/tmp/')
+    myfile = archive_path.split('/')[-1]
+    myfile1 = myfile.split('.')[0]
+    path = "/data/web_static/releases/"
+    run("mkdir -p {}{}}/".format(path, myfile1))
+    run("tar -xzf /tmp/{} -C {}{}/".format(myfile, path, myfile1))
+    run("rm /tmp/{}".format(myfile))
+    run("{}{}/web_static/* {}/".format(path, myfile1, myfile1))
+    run("rm -rf {}/{}/web_static".format(path, myfile1))
+    run("rm -rf /data/web_static/current")
+    run("ln -s {}{}/ /data/web_static/current".format(path, myfile1))
+
