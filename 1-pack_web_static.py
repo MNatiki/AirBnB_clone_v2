@@ -19,7 +19,7 @@ def do_pack():
         str(today.day) + str(today.hour) + str(today.minute) + \
         str(today.second) + ".tgz"
     local("mkdir -p versions")
-    local(f'tar -cvzf versions/{name}.tgz web_static')
+    local(f'tar -cvzf versions/{name} web_static')
     # print(name)
     try:
         print(f"web_static packed: versions/{name} -> \
