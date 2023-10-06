@@ -6,7 +6,7 @@ sudo apt-get install -y nginx
 sudo mkdir -p /data/web_static/shared/
 sudo mkdir -p /data/web_static/releases/test/
 
-sudo echo "This is a test HTML file." > /data/web_static/releases/test/index.html
+echo "This is a test HTML file." > /data/web_static/releases/test/index.html
 
 sudo ln -sf /data/web_static/releases/test/ /data/web_static/current
 
