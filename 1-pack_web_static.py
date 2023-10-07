@@ -1,8 +1,6 @@
 #!/usr/bin/env python3
 """
 Write a Fabric script that generates a .tgz
-archive from the contents of the web_static,
-using the function do_pack.
 """
 
 from fabric.api import *
@@ -14,8 +12,6 @@ import os
 def do_pack():
     """
     The function `do_pack()` creates a compressed archive file of the
-    `web_static` folder and saves it in the `versions` directory, and
-    then prints the path and size of the created archive file.
     """
     now = datetime.now()
     name = "web_static_" + str(now.year) + str(now.month) + \
