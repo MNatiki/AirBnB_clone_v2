@@ -12,6 +12,11 @@ import os
 
 @runs_once
 def do_pack():
+    """
+    The function `do_pack()` creates a compressed archive file of the
+    `web_static` folder and saves it in the `versions` directory, and
+    then prints the path and size of the created archive file.
+    """
     now = datetime.now()
     name = "web_static_" + str(now.year) + str(now.month) + \
         str(now.day) + str(now.hour) + str(now.minute) + \
