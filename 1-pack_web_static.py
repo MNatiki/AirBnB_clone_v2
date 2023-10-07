@@ -1,8 +1,8 @@
-#!/usr/bin/env python3
+#!/usr/bin/python3
 """
-Write a Fabric script that generates a .tgz
+_pack()` function creates a compressed archive file of the
+`web_static` folder and saves it in the `versions` directory
 """
-
 from fabric.api import *
 from datetime import datetime
 import os
@@ -10,21 +10,24 @@ import os
 
 @runs_once
 def do_pack():
-	"""
-	The function `do_pack()` creates a compressed archive file of the
-	"""
-	now = datetime.now()
-	name = "web_static_" + str(now.year) + str(now.month) + \
-		str(now.day) + str(now.hour) + str(now.minute) + \
-		str(now.second) + ".tgz"
-
-	if not os.path.exists("versions"):
-		os.makedirs("versions")
-
-	print("Packing web_static to versions/{}".format(name))
-	result = local("tar -cvzf versions/{} web_static".format(name))
-
-	if result.succeeded:
-		return 'versions/' + name
-	else:
-		return None
+    """
+    The function `do_pack()` creates a compressed archive file of the
+    `web_static` folder and saves it in the `versions` directory, and
+    then prints the path and size of the created archive file.
+    """
+    today = datetime.now()
+    name = "web_static_" + str(today.year) + str(today.month) + \
+        str(today.day) + str(today.hour) + str(today.minute) + \
+        str(today.second) + ".tgz"
+    print("Packing web_static to versions/{}".format(name))
+    local("mkdir -p versions")
+    local('tar -cvzf versions/{} web_static'.format(name))
+    # print(name)
+    try:
+        print("web_static packed: versions/{}\
+               -> {}Bytes".format(name,
+                                  os.path.getsize(os.getcwd() +
+                                                    '/versions/' + name)))
+    except Exception:
+        pass
+    return 'versions/' + name
