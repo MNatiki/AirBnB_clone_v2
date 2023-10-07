@@ -7,7 +7,6 @@ using the function do_pack.
 
 from fabric.api import *
 from datetime import datetime
-from time import sleep
 import os
 
 
@@ -25,7 +24,6 @@ def do_pack():
     result = local("tar -cvzf versions/{} web_static".format(name))
 
     if result.succeeded:
-        sleep(5)
         return 'versions/' + name
     else:
         return None
