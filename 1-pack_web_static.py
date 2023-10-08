@@ -22,12 +22,4 @@ def do_pack():
     print("Packing web_static to versions/{}".format(name))
     local("mkdir -p versions")
     local('tar -cvzf versions/{} web_static'.format(name))
-    # print(name)
-    try:
-        print("web_static packed: versions/{}\
-               -> {}Bytes".format(name,
-                                  os.path.getsize(os.getcwd() +
-                                                    '/versions/' + name)))
-    except Exception:
-        pass
     return 'versions/' + name
