@@ -21,5 +21,8 @@ def do_pack():
         str(today.second) + ".tgz"
     print("Packing web_static to versions/{}".format(name))
     local("mkdir -p versions")
-    local('tar -cvzf versions/{} web_static'.format(name))
-    return 'versions/' + name
+    result = local('tar -cvzf versions/{} web_static'.format(name))
+    if result.secceeded:
+        return 'versions/' + name
+    else:
+        return None
