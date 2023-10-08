@@ -4,7 +4,7 @@ The `deploy` function creates a compressed archive file of the
 `web_static` folder and saves it in the `versions` for deployment
 """
 from fabric.api import *
-env.hosts = ['52.201.220.122', '54.90.60.221']
+env.hosts = ['54.164.28.87', '100.26.164.50']
 from datetime import datetime
 import os
 
