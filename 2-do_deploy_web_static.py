@@ -5,8 +5,7 @@ script based on the file 1-pack_web_static.py that distributes
 
 from fabric.api import put, run, env
 from os.path import exists
-env.hosts = ['52.201.220.122', '54.90.60.221']
-# env.user = ['ubuntu']
+env.hosts = ['54.164.28.87', '100.26.164.50']
 
 
 def do_deploy(archive_path):
