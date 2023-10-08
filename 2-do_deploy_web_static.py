@@ -15,10 +15,10 @@ def do_deploy(archive_path):
     if not exists(archive_path):
         return False
     try:
-        put(archive_path, '/tmp/')
         file_name = archive_path.split('/')[-1]
         no_ext = file_name.split('.')[0]
         path = '/data/web_static/releases/'
+	put(archive_path, '/tmp/')
         new_path = path + no_ext
         run('mkdir -p {}{}'.format(new_path))
         run('tar -xzf /tmp/{} -C {}'.format(file_name, new_path))
