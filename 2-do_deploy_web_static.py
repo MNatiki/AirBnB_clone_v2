@@ -19,12 +19,12 @@ def do_deploy(archive_path):
         no_ext = file_name.split('.')[0]
         path = '/data/web_static/releases/'
 	put(archive_path, '/tmp/')
-        new_path = path + no_ext
+        new_path = path + no_ext + '/'
         run('mkdir -p {}{}'.format(new_path))
         run('tar -xzf /tmp/{} -C {}'.format(file_name, new_path))
         run('rm /tmp/{}'.format(file_name))
         run('rm -rf /data/web_static/current')
         run('ln -s {} /data/web_static/current'.format(new_path))
         return True
-    except Exception:
+    except Exception as e:
         return False
