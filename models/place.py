@@ -4,13 +4,13 @@ The `Place` class represents a place to stay
 in the AirBnB project 
 """
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, Float
-from sqlalchemy.orm import relationship
-from sqlalchemy import ForeignKey, Table
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
+from sqlalchemy.orm import relationship, backref
+#from sqlalchemy import ForeignKey, Table
 from os import getenv
-from models import storage
+#from models import storage
 from models.review import Review
-from models.amenity import Amenity
+#from models.amenity import Amenity
 
 
 """

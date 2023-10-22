@@ -6,10 +6,11 @@ providing common attributes and
 #methods.
 """
 import uuid
+import models
 from datetime import datetime
 from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy import Column, Integer, String, DateTime, ForeignKey
-from models import storage
+from sqlalchemy import Column, Integer, String, DateTime, ForeignKey, Table
+#from models import storage
 from os import getenv
 Base = declarative_base()
 

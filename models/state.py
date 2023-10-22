@@ -5,10 +5,12 @@ The State class represents a state
 and has a relationship with cities.
 """
 from models.base_model import BaseModel, Base, ForeignKey
-from models.base_model import Column, String, Integer, DateTime
-from sqlalchemy.orm import relationship
+#from models.base_model import Column, String, Integer, DateTime
+from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Column, String
 import os
 from models.city import City
+#from models import storage
 
 
 class State(BaseModel, Base):
@@ -23,7 +25,6 @@ class State(BaseModel, Base):
     name = Column(String(128), nullable=False)
     if os.getenv("HBNB_TYPE_STORAGE") == 'db':
         cities = relationship('City', backref='state', cascade="all, delete")
-        pass
     else:
         @property
         def cities(self):
@@ -31,7 +32,6 @@ class State(BaseModel, Base):
             The function "cities" returns a list of cities associated
             with a specific state.
             """
-            from models import storage
             city_list = []
             for city in list(storage.all(City).values()):
                 if city.state_id == self.id:
