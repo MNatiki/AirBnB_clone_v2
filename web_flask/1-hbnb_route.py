@@ -6,13 +6,13 @@ app = Flask(__name__)
 
 
 @app.route('/', strict_slashes=False)
-def index():
+def hello_hbnb():
     """Route index"""
     return "Hello HBNB!"
 
 @app.route('/hbnb', strict_slashes=False)
 def hbnb():
-    """Route index"""
+    """dispay index"""
     return "HBNB"
 
 if __name__ == '__main__':
