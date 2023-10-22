@@ -22,5 +22,6 @@ def c(text):
     """Route /c"""
     return "C %s" % text.replace("_", " ")
 
+
 if __name__ == '__main__':
     app.run("0.0.0.0", 5000)
