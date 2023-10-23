@@ -1,22 +1,24 @@
 #!/usr/bin/python3
-"""
-City Module for HBNB project
-#The City class represents a city and contains
-its name and state ID.
-"""
-from models.base_model import BaseModel, Base, ForeignKey
-from models.base_model import Column, String, Integer, DateTime
-from sqlalchemy.orm import relationship
+"""This is the city class"""
+from models.base_model import BaseModel, Base
+from sqlalchemy import Column, String, ForeignKey
+from sqlalchemy.orm import relationship, backref
 
 
 class City(BaseModel, Base):
-    """
-     The city class, contains state ID and name
-     The City class represents a city and contains
-     its name and state ID.
+    """This is the class for City
+    Attributes:
+        state_id: The state id
+        name: input name
     """
     __tablename__ = "cities"
     name = Column(String(128), nullable=False)
-    state_id = Column(String(60), ForeignKey('states.id'),
+    state_id = Column(String(60),
+                      ForeignKey("states.id", ondelete="CASCADE"),
                       nullable=False)
-    places = relationship('Place', backref='cities', cascade="all, delete")
+    places = relationship(
+        "Place",
+        cascade="all",
+        backref=backref("cities", cascade="all"),
+        passive_deletes=True)
+    # TODO: we need single_parent=True here?

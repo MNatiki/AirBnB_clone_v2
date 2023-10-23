@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""flask app"""
+"""Minimal flask app"""
 
 from flask import Flask
 app = Flask(__name__)
@@ -21,7 +21,6 @@ def hbnb():
 def c(text):
     """Route /c"""
     return "C %s" % text.replace("_", " ")
-
 
 if __name__ == '__main__':
     app.run("0.0.0.0", 5000)

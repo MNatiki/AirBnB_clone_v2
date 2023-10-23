@@ -1,28 +1,20 @@
 #!/usr/bin/python3
-"""
-_pack()` function creates a compressed archive file of the
-`web_static` folder and saves it in the `versions` directory
-"""
-from fabric.api import *
-from datetime import datetime
+""" Fabric script to create tarball"""
+
+import tarfile
 import os
+from datetime import datetime
 
 
-@runs_once
 def do_pack():
-    """
-    The function `do_pack()` creates a compressed archive file of the
-    `web_static` folder and saves it in the `versions` directory, and
-    then prints the path and size of the created archive file.
-    """
-    today = datetime.now()
-    name = "web_static_" + str(today.year) + str(today.month) + \
-        str(today.day) + str(today.hour) + str(today.minute) + \
-        str(today.second) + ".tgz"
-    print("Packing web_static to versions/{}".format(name))
-    local("mkdir -p versions")
-    result = local('tar -cvzf versions/{} web_static'.format(name))
-    if result.secceeded:
-        return 'versions/' + name
+    """ Creates tar archive"""
+    savedir = "versions/"
+    filename = "web_static_" + datetime.now().strftime("%Y%m%d%H%M%S") + ".tgz"
+    if not os.path.exists(savedir):
+        os.mkdir(savedir)
+    with tarfile.open(savedir + filename, "w:gz") as tar:
+        tar.add("web_static", arcname=os.path.basename("web_static"))
+    if os.path.exists(savedir + filename):
+        return savedir + filename
     else:
         return None

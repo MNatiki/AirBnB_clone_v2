@@ -1,5 +1,5 @@
 #!/usr/bin/python3
-"""flask app"""
+"""Minimal flask app"""
 
 from flask import Flask
 app = Flask(__name__)
@@ -29,7 +29,6 @@ def c(text):
 def python(text):
     """Route /python"""
     return "Python %s" % text.replace("_", " ")
-
 
 if __name__ == '__main__':
     app.run("0.0.0.0", 5000)

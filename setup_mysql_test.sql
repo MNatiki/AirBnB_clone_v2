@@ -1,12 +1,13 @@
--- Creates database hbnb_test_db and user hbnb_test
--- and grants some privileges
--- Create the hbnb_test_db table if it doesn't exist
+-- Creates the database hbnb_test_db with specified paramenters
+-- Create database
 CREATE DATABASE IF NOT EXISTS hbnb_test_db;
--- Create the hbnb_dev user if it doesn't exist
-CREATE USER IF NOT EXISTS 'hbnb_test' @'localhost' IDENTIFIED BY 'hbnb_test_pwd';
--- granting previelage on `hbnb_dev_db`
-GRANT USAGE ON *.* TO 'hbnb_test' @'localhost';
--- granting previlage on performance schema
-GRANT SELECT ON `performance_schema`.* TO 'hbnb_test' @'localhost';
--- granting all previlage on `hbnb_dev_db`
-GRANT ALL PRIVILEGES ON `hbnb_test_db`.* TO 'hbnb_test' @'localhost';
+-- Creates user if doesn't exist
+CREATE USER IF NOT EXISTS 'hbnb_test'@'localhost';
+-- Sets password for user
+SET PASSWORD FOR 'hbnb_test'@'localhost' = 'hbnb_test_pwd';
+-- Grants privileges to user on database
+GRANT ALL PRIVILEGES ON hbnb_test_db.* TO 'hbnb_test'@'localhost';
+-- Grants select privileges to user on performance_schema database
+GRANT SELECT ON performance_schema.* TO 'hbnb_test'@'localhost';
+-- Flush privileges
+FLUSH PRIVILEGES;
