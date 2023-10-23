@@ -1,5 +1,9 @@
 #!/usr/bin/python3
+<<<<<<< HEAD
 """Minimal flask app"""
+=======
+"""flask app"""
+>>>>>>> 2de0398ca001744f2bd5e1b021e097f2ed107978
 
 from flask import Flask, render_template
 from models import storage
